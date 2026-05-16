@@ -1,0 +1,28 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "username": "admin",
+      "nombre": "Administrador",
+      "password": "$2a$10$K9ssrAK/WLQKTFAkCDMevu12VwaehCNh2IWEul1sNyCu2gaYNvwVi",
+      "rol": "admin",
+      "creadoEn": "2026-05-13T18:40:15.828Z"
+    },
+    {
+      "id": 2,
+      "username": "consultor1",
+      "nombre": "Consultor Demo",
+      "password": "$2a$10$NsulJAL8jWPCxEhlhhTEP.O7kvcrQm23Fk147QMyN0xylFQ5srqlm",
+      "rol": "consultor",
+      "creadoEn": "2026-05-13T18:40:15.828Z"
+    },
+    {
+      "id": 3,
+      "username": "Hugomseg",
+      "nombre": "Hugo",
+      "password": "$2a$10$m.J7.I/0qLfqi7as0xonNeLbUpHZaLDZbo6Z8H5c8/TJYAzFtaCf.",
+      "rol": "consultor",
+      "creadoEn": "2026-05-13T19:23:58.818Z"
+    }
+  ]
+}

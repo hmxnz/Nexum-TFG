@@ -1,0 +1,22 @@
+{
+  "ontologias": [
+    {
+      "username": "admin",
+      "slug": "ontopersona",
+      "nombre": "ontopersona.ttl",
+      "grafoUri": "http://tfg.universidad.es/usuario/admin/ontologia/ontopersona",
+      "formato": "text/turtle",
+      "triples": 55,
+      "fecha": "2026-05-13T18:43:34.414Z"
+    },
+    {
+      "username": "admin",
+      "slug": "ontologia-base",
+      "nombre": "ontologia-base.ttl",
+      "grafoUri": "http://tfg.universidad.es/usuario/admin/ontologia/ontologia-base",
+      "formato": "text/turtle",
+      "triples": 135,
+      "fecha": "2026-05-13T18:43:45.408Z"
+    }
+  ]
+}

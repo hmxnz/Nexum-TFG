@@ -1,0 +1,219 @@
+# Ontología base del TFG - Gestión de Recursos Semánticos
+# Cargada automáticamente por Fuseki al arrancar
+# Incluye la jerarquía de clases, propiedades y algunos datos de ejemplo
+
+@prefix :        <http://tfg.universidad.es/recursos#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# ===========================================================
+# DECLARACIÓN DE LA ONTOLOGÍA
+# ===========================================================
+
+<http://tfg.universidad.es/recursos> a owl:Ontology ;
+    rdfs:label   "Ontología de Recursos Semánticos - TFG"@es ;
+    rdfs:comment "Ontología para gestión y consulta de recursos académicos y científicos"@es ;
+    owl:versionInfo "1.0" .
+
+# ===========================================================
+# CLASES PRINCIPALES
+# ===========================================================
+
+:Recurso a owl:Class ;
+    rdfs:label   "Recurso"@es ;
+    rdfs:comment "Clase raíz de todos los recursos del sistema"@es .
+
+# Subclase de Recurso
+:RecursoDigital a owl:Class ;
+    rdfs:subClassOf :Recurso ;
+    rdfs:label   "Recurso Digital"@es ;
+    rdfs:comment "Recurso disponible en formato digital"@es .
+
+# Subclases de RecursoDigital
+# Gracias a la inferencia OWL, cualquier Documento también se infiere como RecursoDigital y Recurso
+:Documento a owl:Class ;
+    rdfs:subClassOf :RecursoDigital ;
+    rdfs:label "Documento"@es .
+
+:Articulo a owl:Class ;
+    rdfs:subClassOf :Documento ;
+    rdfs:label "Artículo Científico"@es .
+
+:TesisDoctoral a owl:Class ;
+    rdfs:subClassOf :Documento ;
+    rdfs:label "Tesis Doctoral"@es .
+
+:TFG a owl:Class ;
+    rdfs:subClassOf :Documento ;
+    rdfs:label "Trabajo de Fin de Grado"@es .
+
+:Software a owl:Class ;
+    rdfs:subClassOf :RecursoDigital ;
+    rdfs:label "Software"@es .
+
+:Dataset a owl:Class ;
+    rdfs:subClassOf :RecursoDigital ;
+    rdfs:label "Conjunto de Datos"@es .
+
+# Clases auxiliares
+:Persona a owl:Class ;
+    rdfs:label "Persona"@es .
+
+:Autor a owl:Class ;
+    rdfs:subClassOf :Persona ;
+    rdfs:label "Autor"@es .
+
+:AreaTematica a owl:Class ;
+    rdfs:label "Área Temática"@es .
+
+# ===========================================================
+# PROPIEDADES DE OBJETO
+# ===========================================================
+
+:tieneAutor a owl:ObjectProperty ;
+    rdfs:label  "tiene autor"@es ;
+    rdfs:domain :Recurso ;
+    rdfs:range  :Persona .
+
+# esCitadoPor es la inversa de cita
+# El razonador OWL inferirá automáticamente la dirección opuesta
+:cita a owl:ObjectProperty ;
+    rdfs:label   "cita"@es ;
+    rdfs:domain  :Documento ;
+    rdfs:range   :Documento .
+
+:esCitadoPor a owl:ObjectProperty ;
+    rdfs:label   "es citado por"@es ;
+    owl:inverseOf :cita .
+
+# Propiedad simétrica - si A está relacionado con B, B está relacionado con A
+:estaRelacionadoCon a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label  "está relacionado con"@es ;
+    rdfs:domain :Recurso ;
+    rdfs:range  :Recurso .
+
+:perteneceA a owl:ObjectProperty ;
+    rdfs:label  "pertenece a área temática"@es ;
+    rdfs:domain :Recurso ;
+    rdfs:range  :AreaTematica .
+
+# ===========================================================
+# PROPIEDADES DE DATO
+# ===========================================================
+
+:fechaPublicacion a owl:DatatypeProperty ;
+    rdfs:label  "fecha de publicación"@es ;
+    rdfs:domain :Recurso ;
+    rdfs:range  xsd:date .
+
+:numeroPaginas a owl:DatatypeProperty ;
+    rdfs:label  "número de páginas"@es ;
+    rdfs:domain :Documento ;
+    rdfs:range  xsd:integer .
+
+:urlAcceso a owl:DatatypeProperty ;
+    rdfs:label  "URL de acceso"@es ;
+    rdfs:domain :RecursoDigital ;
+    rdfs:range  xsd:anyURI .
+
+:palabrasClave a owl:DatatypeProperty ;
+    rdfs:label "palabras clave"@es ;
+    rdfs:domain :Recurso ;
+    rdfs:range  xsd:string .
+
+# ===========================================================
+# ÁREAS TEMÁTICAS
+# ===========================================================
+
+:WebSemantica a :AreaTematica ;
+    rdfs:label "Web Semántica"@es .
+
+:InteligenciaArtificial a :AreaTematica ;
+    rdfs:label "Inteligencia Artificial"@es .
+
+:BasesDeConocimiento a :AreaTematica ;
+    rdfs:label "Bases de Conocimiento"@es .
+
+:IngenieriaDelSoftware a :AreaTematica ;
+    rdfs:label "Ingeniería del Software"@es .
+
+:RecuperacionDeInformacion a :AreaTematica ;
+    rdfs:label "Recuperación de Información"@es .
+
+# ===========================================================
+# PERSONAS DE EJEMPLO
+# ===========================================================
+
+:persona_berners_lee a :Autor ;
+    rdfs:label   "Tim Berners-Lee" ;
+    dc:description "Inventor de la World Wide Web y pionero de la Web Semántica"@es .
+
+:persona_van_harmelen a :Autor ;
+    rdfs:label   "Frank van Harmelen" ;
+    dc:description "Investigador en Web Semántica y lógica de descripción"@es .
+
+:persona_bizer a :Autor ;
+    rdfs:label   "Christian Bizer" ;
+    dc:description "Investigador en Linked Data y Web de Datos"@es .
+
+# ===========================================================
+# RECURSOS DE EJEMPLO
+# ===========================================================
+
+# Artículo fundacional de la Web Semántica
+:recurso_001 a :Articulo ;
+    rdfs:label       "The Semantic Web"@en ;
+    dc:description   "Artículo fundacional sobre la Web Semántica publicado en Scientific American en 2001"@es ;
+    dc:creator       "Tim Berners-Lee, James Hendler, Ora Lassila" ;
+    dc:date          "2001-05-01"^^xsd:date ;
+    :tieneAutor      :persona_berners_lee ;
+    :perteneceA      :WebSemantica ;
+    :numeroPaginas   8 ;
+    :palabrasClave   "semantic web, knowledge representation, ontology"@en ;
+    :urlAcceso       "https://www.scientificamerican.com/article/the-semantic-web/"^^xsd:anyURI .
+
+# TFG propio - el estudiante lo añade como recurso
+:recurso_002 a :TFG ;
+    rdfs:label       "Sistema de Gestión de Recursos Semánticos"@es ;
+    dc:description   "TFG que implementa un sistema web para gestionar y consultar recursos semánticos mediante RDF, OWL y SPARQL"@es ;
+    dc:creator       "Hugo" ;
+    dc:date          "2024-06-01"^^xsd:date ;
+    :perteneceA      :WebSemantica ;
+    :perteneceA      :BasesDeConocimiento ;
+    :estaRelacionadoCon :recurso_001 .
+
+# Apache Jena Fuseki como recurso de tipo Software
+:recurso_003 a :Software ;
+    rdfs:label       "Apache Jena Fuseki"@en ;
+    dc:description   "Servidor SPARQL basado en Apache Jena. Soporta inferencia OWL y almacenamiento TDB2"@es ;
+    dc:creator       "Apache Software Foundation" ;
+    dc:date          "2023-01-01"^^xsd:date ;
+    :perteneceA      :WebSemantica ;
+    :urlAcceso       "https://jena.apache.org/documentation/fuseki2/"^^xsd:anyURI .
+
+# Dataset de ejemplo
+:recurso_004 a :Dataset ;
+    rdfs:label       "DBpedia"@en ;
+    dc:description   "Extracción estructurada de información de Wikipedia en formato RDF Linked Data"@es ;
+    dc:creator       "DBpedia Association" ;
+    dc:date          "2023-09-01"^^xsd:date ;
+    :perteneceA      :BasesDeConocimiento ;
+    :perteneceA      :RecuperacionDeInformacion ;
+    :estaRelacionadoCon :recurso_001 ;
+    :urlAcceso       "https://www.dbpedia.org"^^xsd:anyURI .
+
+# Otro artículo que cita al primero (para probar la inferencia de inversa)
+:recurso_005 a :Articulo ;
+    rdfs:label       "Linked Data - The Story So Far"@en ;
+    dc:description   "Revisión del estado del arte en Linked Data y la Web de Datos"@es ;
+    dc:creator       "Christian Bizer, Tom Heath, Tim Berners-Lee" ;
+    dc:date          "2009-01-01"^^xsd:date ;
+    :tieneAutor      :persona_berners_lee ;
+    :tieneAutor      :persona_bizer ;
+    :perteneceA      :WebSemantica ;
+    :cita            :recurso_001 ;
+    :numeroPaginas   26 .

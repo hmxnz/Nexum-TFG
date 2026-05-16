@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexum — Gestión de Recursos Semánticos</title>
+    <script>
+      // Aplicar el tema antes de que React monte para evitar el parpadeo
+      // si no se hace esto hay un flash blanco al cargar en modo oscuro
+      var tema = localStorage.getItem('tema') || 'oscuro';
+      document.documentElement.setAttribute('data-tema', tema);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

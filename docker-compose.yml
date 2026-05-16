@@ -1,0 +1,65 @@
+# Docker Compose para el TFG de Gestión de Recursos Semánticos
+# Levanta tres servicios: Fuseki (BD semántica), backend (API) y frontend (React)
+
+services:
+
+  fuseki:
+    build: ./fuseki
+    container_name: fuseki_tfg
+    ports:
+      - "3030:3030"
+    environment:
+      - ADMIN_PASSWORD=admin123
+      - JAVA_OPTIONS=-Xmx2g -Xms512m
+    volumes:
+      - fuseki_data:/fuseki/databases
+    networks:
+      - tfg_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3030/$/ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: backend_tfg
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - FUSEKI_URL=http://fuseki:3030
+      - FUSEKI_DATASET=recursos
+      - FUSEKI_USER=admin
+      - FUSEKI_PASSWORD=admin123
+      - JWT_SECRET=clave_secreta_tfg_cambiar_en_produccion_2024
+      - JWT_EXPIRES_IN=24h
+      - NODE_ENV=development
+    depends_on:
+      fuseki:
+        condition: service_healthy
+    networks:
+      - tfg_network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_tfg
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - tfg_network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+networks:
+  tfg_network:
+    driver: bridge
+
+volumes:
+  fuseki_data:
