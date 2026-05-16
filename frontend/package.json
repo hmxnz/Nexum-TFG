@@ -1,5 +1,6 @@
 {
   "name": "frontend-tfg",
+  "author": "Hugo Martínez Segura",
   "private": true,
   "version": "0.1.0",
   "type": "module",
