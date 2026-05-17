@@ -201,4 +201,4 @@ Por ejemplo, dado que en la ontología se define `recursos:esCitadoPor owl:inver
 
 ## Autor
 
-Hugo — Grado en Gestión de Información y Contenidos Digitales — Universidad de Murcia — 2026
+Hugo Martínez Segura — Grado en Gestión de Información y Contenidos Digitales — Universidad de Murcia — 2026
