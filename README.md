@@ -80,7 +80,7 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 Solo necesitas **Docker**. Nada más que instalar.
 
 ```bash
-git clone <url-del-repo>
+git clone https://github.com/hmxnz/Nexum
 cd nexum
 docker-compose up --build
 ```
