@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/LOGO.png" alt="Universidad de Murcia" width="180"/>
+<img src="assets/LOGO.png" alt="Nexum — Gestión de Recursos Semánticos" width="420"/>
 
-# Nexum
+<br/>
 
 **Carga una ontología, explora el grafo y deja que el razonador haga su magia.**
 
