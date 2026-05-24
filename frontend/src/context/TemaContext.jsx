@@ -3,9 +3,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 const TemaContext = createContext(null)
 
 export function TemaProvider({ children }) {
-  // leer del localStorage al iniciar, oscuro por defecto
+  // leer del localStorage al iniciar, claro por defecto
   const [tema, setTema] = useState(() => {
-    return localStorage.getItem('tema') || 'oscuro'
+    return localStorage.getItem('tema') || 'claro'
   })
 
   // aplicar el atributo al elemento raíz cada vez que cambia el tema

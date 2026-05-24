@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+/* Nodos y aristas para el grafo animado de fondo */
 const NODOS = [
   { id: 1,  cx: 120,  cy: 140 },
   { id: 2,  cx: 1300, cy: 160 },
@@ -59,135 +60,166 @@ function Login() {
   return (
     <div className="login-container">
 
-      {/* Red semántica animada de fondo */}
-      <svg
-        className="login-grafo-svg"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        {ARISTAS.map(([a, b], i) => {
-          const na = nodoMap[a], nb = nodoMap[b]
-          return (
-            <line
-              key={i}
-              className="login-linea"
-              x1={na.cx} y1={na.cy}
-              x2={nb.cx} y2={nb.cy}
-              style={{
-                animationDelay:    `${i * 0.45}s`,
-                animationDuration: `${7 + (i % 6)}s`,
-              }}
-            />
-          )
-        })}
-        {NODOS.map((n, i) => (
-          <g key={n.id}>
-            <circle
-              className="login-nodo-halo"
-              cx={n.cx} cy={n.cy} r="16"
-              style={{
-                animationDelay:    `${i * 0.35}s`,
-                animationDuration: `${2.8 + (i % 4) * 0.6}s`,
-              }}
-            />
-            <circle className="login-nodo-punto" cx={n.cx} cy={n.cy} r="4.5" />
-          </g>
-        ))}
-      </svg>
+      {/* ── Panel izquierdo — identidad UMU + grafo animado ── */}
+      <div className="login-panel-izq">
 
-      {/* Tarjeta principal */}
-      <div className="login-card">
+        {/* Grafo semántico de fondo */}
+        <svg
+          className="login-grafo-svg"
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+        >
+          {ARISTAS.map(([a, b], i) => {
+            const na = nodoMap[a], nb = nodoMap[b]
+            return (
+              <line
+                key={i}
+                className="login-linea"
+                x1={na.cx} y1={na.cy}
+                x2={nb.cx} y2={nb.cy}
+                style={{
+                  animationDelay:    `${i * 0.45}s`,
+                  animationDuration: `${7 + (i % 6)}s`,
+                }}
+              />
+            )
+          })}
+          {NODOS.map((n, i) => (
+            <g key={n.id}>
+              <circle
+                className="login-nodo-halo"
+                cx={n.cx} cy={n.cy} r="16"
+                style={{
+                  animationDelay:    `${i * 0.35}s`,
+                  animationDuration: `${2.8 + (i % 4) * 0.6}s`,
+                }}
+              />
+              <circle className="login-nodo-punto" cx={n.cx} cy={n.cy} r="4.5" />
+            </g>
+          ))}
+        </svg>
 
-        {/* Marca */}
-        <div className="login-marca">
-          <svg className="login-logo" viewBox="0 0 60 60" fill="none" aria-hidden="true">
-            <circle cx="30" cy="30" r="14" stroke="currentColor" strokeWidth="1.2" opacity="0.25"/>
-            <circle cx="30" cy="30" r="7"  fill="currentColor" opacity="0.95"/>
-            <circle cx="9"  cy="13" r="4"  fill="currentColor" opacity="0.72"/>
-            <circle cx="51" cy="13" r="4"  fill="currentColor" opacity="0.72"/>
-            <circle cx="9"  cy="47" r="4"  fill="currentColor" opacity="0.72"/>
-            <circle cx="51" cy="47" r="4"  fill="currentColor" opacity="0.72"/>
-            <circle cx="30" cy="4"  r="3"  fill="currentColor" opacity="0.50"/>
-            <circle cx="30" cy="56" r="3"  fill="currentColor" opacity="0.50"/>
-            <line x1="30" y1="30" x2="9"  y2="13" stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="30" y1="30" x2="51" y2="13" stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="30" y1="30" x2="9"  y2="47" stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="30" y1="30" x2="51" y2="47" stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="30" y1="30" x2="30" y2="4"  stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="30" y1="30" x2="30" y2="56" stroke="currentColor" strokeWidth="1.4" opacity="0.45"/>
-            <line x1="9"  y1="13" x2="30" y2="4"  stroke="currentColor" strokeWidth="0.8" opacity="0.22"/>
-            <line x1="51" y1="13" x2="30" y2="4"  stroke="currentColor" strokeWidth="0.8" opacity="0.22"/>
-            <line x1="9"  y1="47" x2="30" y2="56" stroke="currentColor" strokeWidth="0.8" opacity="0.22"/>
-            <line x1="51" y1="47" x2="30" y2="56" stroke="currentColor" strokeWidth="0.8" opacity="0.22"/>
-          </svg>
+        {/* Contenido sobre el grafo */}
+        <div className="login-izq-contenido">
+          <img
+            src="/logo-umu.png"
+            alt="Universidad de Murcia"
+            className="login-logo-umu"
+          />
 
-          <h1 className="login-nombre">Nexum</h1>
-          <p className="login-tagline">Gestión de Recursos Semánticos</p>
-        </div>
-
-        <div className="login-separador" />
-
-        <p className="login-subtitulo">Iniciar sesión</p>
-
-        {mensajeExito && (
-          <div className="exito-mensaje" style={{ marginBottom: '1rem' }}>
-            {mensajeExito}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Usuario</label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Nombre de usuario"
-              autoComplete="username"
-              required
-              disabled={cargando}
-            />
+          <div className="login-app-marca">
+            {/* Icono Nexum */}
+            <svg className="login-nexum-icon" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+              <circle cx="30" cy="30" r="7"  fill="currentColor" opacity="0.95"/>
+              <circle cx="9"  cy="13" r="4"  fill="currentColor" opacity="0.72"/>
+              <circle cx="51" cy="13" r="4"  fill="currentColor" opacity="0.72"/>
+              <circle cx="9"  cy="47" r="4"  fill="currentColor" opacity="0.72"/>
+              <circle cx="51" cy="47" r="4"  fill="currentColor" opacity="0.72"/>
+              <circle cx="30" cy="4"  r="3"  fill="currentColor" opacity="0.50"/>
+              <circle cx="30" cy="56" r="3"  fill="currentColor" opacity="0.50"/>
+              <line x1="30" y1="30" x2="9"  y2="13" stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+              <line x1="30" y1="30" x2="51" y2="13" stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+              <line x1="30" y1="30" x2="9"  y2="47" stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+              <line x1="30" y1="30" x2="51" y2="47" stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+              <line x1="30" y1="30" x2="30" y2="4"  stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+              <line x1="30" y1="30" x2="30" y2="56" stroke="currentColor" strokeWidth="1.8" opacity="0.50"/>
+            </svg>
+            <div className="login-nombre-app">
+              Ne<span className="login-acento">x</span>um
+            </div>
+            <div className="login-tagline-izq">Gestión de Recursos Semánticos</div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Contraseña"
-              autoComplete="current-password"
-              required
-              disabled={cargando}
-            />
+          <div className="login-separador-izq" />
+
+          <div className="login-features">
+            <div className="login-feature">
+              <span className="login-feature-dot" />
+              Ontologías RDF/OWL sobre Apache Jena Fuseki
+            </div>
+            <div className="login-feature">
+              <span className="login-feature-dot" />
+              Consola SPARQL con consultas en tiempo real
+            </div>
+            <div className="login-feature">
+              <span className="login-feature-dot" />
+              Visualización de grafos y razonamiento OWL
+            </div>
           </div>
-
-          {error && <div className="error-mensaje">{error}</div>}
-
-          <button type="submit" className="btn-primary" disabled={cargando}>
-            {cargando
-              ? <><span className="spinner" />Entrando...</>
-              : 'Entrar'
-            }
-          </button>
-        </form>
-
-        <div className="login-demo-info">
-          <p>Usuarios de demo:</p>
-          <p><code>admin</code> / <code>admin123</code> — administrador</p>
-          <p><code>consultor1</code> / <code>consultor123</code> — consultor</p>
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-          ¿No tienes cuenta?{' '}
-          <Link to="/registro" style={{ color: 'var(--primary)', fontWeight: 600 }}>
-            Regístrate
-          </Link>
         </div>
       </div>
+
+      {/* ── Panel derecho — formulario de login ── */}
+      <div className="login-panel-der">
+        <div className="login-card">
+
+          <h1 className="login-card-titulo">Iniciar sesión</h1>
+          <p className="login-card-sub">
+            Accede a tu espacio en <span>Nexum</span>
+          </p>
+
+          {mensajeExito && (
+            <div className="exito-mensaje" style={{ marginBottom: '1rem' }}>
+              {mensajeExito}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="username">Usuario</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Nombre de usuario"
+                autoComplete="username"
+                required
+                disabled={cargando}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Contraseña</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Contraseña"
+                autoComplete="current-password"
+                required
+                disabled={cargando}
+              />
+            </div>
+
+            {error && <div className="error-mensaje">{error}</div>}
+
+            <button type="submit" className="btn-primary" disabled={cargando}>
+              {cargando
+                ? <><span className="spinner" />Entrando...</>
+                : 'Entrar'
+              }
+            </button>
+          </form>
+
+          <div className="login-demo-info">
+            <p>Usuarios de demo:</p>
+            <p><code>admin</code> / <code>admin123</code> — administrador</p>
+            <p><code>consultor1</code> / <code>consultor123</code> — consultor</p>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '1.4rem', fontSize: '0.86rem', color: 'var(--text-muted)' }}>
+            ¿No tienes cuenta?{' '}
+            <Link to="/registro" style={{ color: 'var(--primary)', fontWeight: 600 }}>
+              Regístrate
+            </Link>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   )
 }

@@ -11,13 +11,29 @@ import OntologiaDetalle from './components/OntologiaDetalle'
 import GrafoVista from './components/GrafoVista'
 import InferenciaOWL from './components/InferenciaOWL'
 import AdminPanel from './components/AdminPanel'
+import RecursosList from './components/RecursosList'
 import Navbar from './components/Navbar'
+
+/* Wrapper que añade la sidebar y el footer a las rutas protegidas */
+function LayoutApp({ children }) {
+  return (
+    <div className="app-layout">
+      <Navbar />
+      <div className="app-main">
+        {children}
+        <footer className="app-footer">
+          © 2026 Hugo Martínez Segura · Universidad de Murcia
+        </footer>
+      </div>
+    </div>
+  )
+}
 
 function RutaProtegida({ children }) {
   const { usuario, cargando } = useAuth()
   if (cargando) return <div className="cargando">Comprobando sesión...</div>
   if (!usuario)  return <Navigate to="/login" replace />
-  return children
+  return <LayoutApp>{children}</LayoutApp>
 }
 
 function RutaAdmin({ children }) {
@@ -25,7 +41,7 @@ function RutaAdmin({ children }) {
   if (cargando)                    return <div className="cargando">Comprobando sesión...</div>
   if (!usuario)                    return <Navigate to="/login" replace />
   if (usuario.rol !== 'admin')     return <Navigate to="/" replace />
-  return children
+  return <LayoutApp>{children}</LayoutApp>
 }
 
 function App() {
@@ -40,31 +56,35 @@ function App() {
 
             {/* Rutas protegidas */}
             <Route path="/" element={
-              <RutaProtegida><Navbar /><Dashboard /></RutaProtegida>
+              <RutaProtegida><Dashboard /></RutaProtegida>
             } />
 
             <Route path="/mis-ontologias" element={
-              <RutaProtegida><Navbar /><MisOntologias /></RutaProtegida>
+              <RutaProtegida><MisOntologias /></RutaProtegida>
             } />
 
             <Route path="/mis-ontologias/:slug" element={
-              <RutaProtegida><Navbar /><OntologiaDetalle /></RutaProtegida>
+              <RutaProtegida><OntologiaDetalle /></RutaProtegida>
             } />
 
             <Route path="/sparql" element={
-              <RutaProtegida><Navbar /><SparqlConsole /></RutaProtegida>
+              <RutaProtegida><SparqlConsole /></RutaProtegida>
             } />
 
             <Route path="/grafo" element={
-              <RutaProtegida><Navbar /><GrafoVista /></RutaProtegida>
+              <RutaProtegida><GrafoVista /></RutaProtegida>
             } />
 
             <Route path="/inferencia" element={
-              <RutaProtegida><Navbar /><InferenciaOWL /></RutaProtegida>
+              <RutaProtegida><InferenciaOWL /></RutaProtegida>
+            } />
+
+            <Route path="/recursos" element={
+              <RutaProtegida><RecursosList /></RutaProtegida>
             } />
 
             <Route path="/admin" element={
-              <RutaAdmin><Navbar /><AdminPanel /></RutaAdmin>
+              <RutaAdmin><AdminPanel /></RutaAdmin>
             } />
 
             <Route path="*" element={<Navigate to="/" replace />} />
