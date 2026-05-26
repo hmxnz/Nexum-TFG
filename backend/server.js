@@ -26,8 +26,8 @@ app.use(cors({
 app.use(express.json());
 app.use(morgan('dev')); // logs de peticiones HTTP en desarrollo
 
-// Limitador de peticiones - por si acaso hay spam o algo
-// TODO: ajustar estos valores, 100 igual es demasiado poco para el demo
+//! Limitador de peticiones — sin esto cualquiera puede bombardear la API
+// TODO ajustar el max a algo más razonable, 100 igual se queda corto en el demo
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -35,7 +35,7 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
-// Rutas de la API
+//* Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/sparql', sparqlRoutes);
 app.use('/api/recursos', recursosRoutes);
@@ -55,8 +55,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Manejo genérico de errores no controlados
-// aquí habría que mejorar esto pero de momento va
+//? manejo de errores genérico — habría que hacer algo más fino aquí, de momento captura lo que escape de las rutas
 app.use((err, req, res, next) => {
   console.error('Error no controlado:', err.stack);
   res.status(500).json({ error: 'Error interno del servidor' });

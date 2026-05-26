@@ -15,7 +15,7 @@ const {
   leerOntologias, guardarOntologias, construirUriGrafo
 } = require('./mis-ontologias');
 
-// Mapa extensión → Content-Type RDF que entiende Fuseki
+//* Mapa extensión → Content-Type que acepta Fuseki para cada formato RDF
 const CONTENT_TYPES = {
   '.ttl': 'text/turtle',
   '.rdf': 'application/rdf+xml',
@@ -33,7 +33,7 @@ if (!fs.existsSync(DIR_TMP)) {
 
 const upload = multer({
   dest: DIR_TMP,
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB máximo
+  limits: { fileSize: 50 * 1024 * 1024 }, //! 50 MB máximo — subir una ontología más grande sería raro, pero por si acaso
   fileFilter(req, file, cb) {
     const ext = path.extname(file.originalname).toLowerCase();
     if (CONTENT_TYPES[ext]) {
@@ -50,7 +50,7 @@ function procesarSubida(req, res) {
   });
 }
 
-// Contar triples del grafo nombrado concreto (para calcular el delta)
+//* Cuenta triples antes y después de subir para saber cuántos se añadieron de verdad
 async function contarTriplesGrafo(grafoUri) {
   const q = `SELECT (COUNT(*) AS ?n) WHERE { GRAPH <${grafoUri}> { ?s ?p ?o } }`;
   const resultado = await fusekiService.ejecutarQuery(q);
@@ -83,7 +83,7 @@ router.post('/upload', verificarToken, async (req, res) => {
 
     const antesDeCargar = await contarTriplesGrafo(grafoUri);
 
-    // Enviar el archivo a Fuseki usando el Graph Store Protocol con grafo nombrado por usuario
+    //* enviar a Fuseki con el Graph Store Protocol — el grafo nombrado vincula la ontología al usuario
     const urlFuseki = `${fusekiConfig.dataEndpoint}?graph=${encodeURIComponent(grafoUri)}`;
     const contenido = fs.readFileSync(rutaTemporal);
 
@@ -114,7 +114,7 @@ router.post('/upload', verificarToken, async (req, res) => {
     };
 
     if (idxExistente >= 0) {
-      todas[idxExistente] = meta; // actualizar si ya existía (re-subida del mismo archivo)
+      todas[idxExistente] = meta; //? re-subida del mismo archivo — se sobreescriben los metadatos anteriores
     } else {
       todas.push(meta);
     }

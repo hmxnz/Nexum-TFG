@@ -10,15 +10,15 @@ const { verificarToken } = require('../middleware/auth');
 
 const RUTA_USUARIOS = path.join(__dirname, '../data/usuarios.json');
 
-// Usuarios semilla: se crean la primera vez que arranca el servidor si el fichero no existe
+//* Usuarios semilla: se crean la primera vez que arranca el servidor si el fichero no existe
 const USUARIOS_SEED = [
   { id: 1, username: 'admin',      nombre: 'Administrador',  passwordPlana: 'admin123',     rol: 'admin'     },
   { id: 2, username: 'consultor1', nombre: 'Consultor Demo', passwordPlana: 'consultor123', rol: 'consultor' },
 ];
 
-// ──────────────────────────────────────────────
-// Helpers de persistencia
-// ──────────────────────────────────────────────
+//* ──────────────────────────────────────────────
+//* Helpers de persistencia
+//* ──────────────────────────────────────────────
 
 function leerUsuarios() {
   try {
@@ -52,9 +52,9 @@ async function inicializar() {
 
 inicializar().catch(err => console.error('[AUTH] Error inicializando usuarios:', err));
 
-// ──────────────────────────────────────────────
-// Rutas
-// ──────────────────────────────────────────────
+//* ──────────────────────────────────────────────
+//* Rutas
+//* ──────────────────────────────────────────────
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
@@ -67,7 +67,7 @@ router.post('/login', async (req, res) => {
   const usuarios = leerUsuarios();
   const usuario  = usuarios.find(u => u.username === username);
 
-  // Mismo mensaje para usuario inexistente o contraseña incorrecta (evita enumeración)
+  //! mismo mensaje para usuario inexistente o contraseña incorrecta — así no se puede enumerar usuarios
   if (!usuario) {
     return res.status(401).json({ error: 'Credenciales incorrectas' });
   }
@@ -115,7 +115,7 @@ router.post('/registro', async (req, res) => {
     return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
   }
 
-  // Determinar rol: solo un admin autenticado puede crear otro admin
+  //! determinar rol: solo un admin autenticado puede elevar permisos — si no hay token válido queda como consultor
   let rolFinal = 'consultor';
   const authHeader = req.headers['authorization'];
   if (authHeader?.startsWith('Bearer ')) {
@@ -158,7 +158,7 @@ router.get('/usuarios', verificarToken, (req, res) => {
   if (req.usuario.rol !== 'admin') {
     return res.status(403).json({ error: 'Solo el administrador puede ver la lista de usuarios' });
   }
-  const usuarios = leerUsuarios().map(({ password: _, ...u }) => u); // sin el hash
+  const usuarios = leerUsuarios().map(({ password: _, ...u }) => u); //! sin el hash — nunca devolver la contraseña aunque esté cifrada
   res.json(usuarios);
 });
 

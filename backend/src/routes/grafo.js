@@ -8,7 +8,7 @@ const { verificarToken, adminOConsultor } = require('../middleware/auth');
 const fusekiService = require('../services/fusekiService');
 const { esGrafoDelUsuario } = require('./mis-ontologias');
 
-// Color de cada tipo de recurso - coincide con la leyenda del frontend
+//* colores por tipo de recurso — tienen que coincidir con los del frontend o la leyenda no cuadra
 const COLORES_TIPO = {
   Articulo:       '#3b82f6',
   TFG:            '#22c55e',
@@ -37,7 +37,7 @@ const ETIQUETAS_RELACION = {
 router.get('/', verificarToken, adminOConsultor, async (req, res) => {
   const { grafoUri } = req.query;
 
-  // Validar que el grafo pertenece al usuario si se indica uno concreto
+  //! validar que el grafo pertenece al usuario — no dejar que acceda a grafos ajenos
   if (grafoUri && !esGrafoDelUsuario(grafoUri, req.usuario.username)) {
     return res.status(403).json({ error: 'No tienes acceso a ese grafo' });
   }
@@ -46,7 +46,7 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
     let queryNodos, queryAristas;
 
     if (grafoUri) {
-      // Vista de una ontología concreta: sin filtro de namespace, buscamos en ese grafo
+      // ontología concreta del usuario: buscamos en ese grafo sin filtrar namespace
       queryNodos = `
         PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -78,7 +78,7 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
         }
       `;
     } else {
-      // Vista global del dataset (solo namespace propio)
+      // vista global: solo el namespace propio del dataset de demo
       queryNodos = `
         PREFIX rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
@@ -120,7 +120,7 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
       fusekiService.ejecutarQuery(queryAristas),
     ]);
 
-    // Construir mapa de nodos
+    //* construir el mapa de nodos — usamos un objeto para deduplicar por URI
     const nodosMap = {};
 
     for (const b of resultNodos.results.bindings) {
@@ -142,7 +142,7 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
       }
     }
 
-    // Construir aristas evitando duplicados
+    //* construir las aristas — el Set de claves evita duplicados
     const aristas       = [];
     const aristasVistas = new Set();
 

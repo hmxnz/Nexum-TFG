@@ -10,9 +10,9 @@ const fusekiService = require('../services/fusekiService');
 
 const RUTA_ONTOLOGIAS = path.join(__dirname, '../data/ontologias.json');
 
-// ──────────────────────────────────────────────
-// Helpers de persistencia (compartidos con ontologia.js via require)
-// ──────────────────────────────────────────────
+//* ──────────────────────────────────────────────
+//* Helpers de persistencia (los importa también ontologia.js)
+//* ──────────────────────────────────────────────
 
 function leerOntologias() {
   try {
@@ -26,8 +26,8 @@ function guardarOntologias(lista) {
   fs.writeFileSync(RUTA_ONTOLOGIAS, JSON.stringify({ ontologias: lista }, null, 2), 'utf8');
 }
 
-// Construir la URI del grafo nombrado para un usuario y nombre de archivo dados
-// Resultado: { slug, uri }
+//* Construir la URI del grafo nombrado para un usuario y nombre de archivo
+// devuelve { slug, uri }
 function construirUriGrafo(username, nombreArchivo) {
   const ext = path.extname(nombreArchivo).toLowerCase();
   const slug = (path.basename(nombreArchivo, ext)
@@ -42,7 +42,7 @@ function construirUriGrafo(username, nombreArchivo) {
   };
 }
 
-// Verificar que una URI de grafo pertenece al usuario indicado
+//! Verificar que la URI del grafo pertenece al usuario — evita que alguien acceda a grafos ajenos
 function esGrafoDelUsuario(grafoUri, username) {
   if (typeof grafoUri !== 'string' || grafoUri.includes('..') || grafoUri.length > 300) {
     return false;
@@ -51,9 +51,9 @@ function esGrafoDelUsuario(grafoUri, username) {
   return grafoUri.startsWith(`http://tfg.universidad.es/usuario/${usernameSlug}/ontologia/`);
 }
 
-// ──────────────────────────────────────────────
-// Rutas
-// ──────────────────────────────────────────────
+//* ──────────────────────────────────────────────
+//* Rutas
+//* ──────────────────────────────────────────────
 
 // GET /api/mis-ontologias — lista las ontologías del usuario autenticado
 router.get('/', verificarToken, (req, res) => {
@@ -96,10 +96,10 @@ router.delete('/:slug', verificarToken, async (req, res) => {
   }
 
   try {
-    // Borrar el grafo nombrado de Fuseki con DROP GRAPH
+    // borrar el grafo de Fuseki — SILENT evita error si ya no existe
     await fusekiService.ejecutarUpdate(`DROP SILENT GRAPH <${ontologia.grafoUri}>`);
 
-    // Actualizar el fichero de metadatos quitando esta entrada
+    // quitar la entrada del JSON de metadatos
     const actualizadas = todas.filter(o => !(o.slug === slug && o.username === req.usuario.username));
     guardarOntologias(actualizadas);
 

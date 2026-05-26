@@ -16,10 +16,10 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
     return res.status(403).json({ error: 'No tienes acceso a ese grafo' });
   }
 
-  // Para ontologías propias del usuario usamos consultas genéricas (sin filtro de namespace fijo)
-  // Para la demo global usamos el namespace propio del TFG
+  //* si viene un grafoUri usamos consultas genéricas — cada ontología puede tener su propio namespace
+  //? si no hay grafoUri, filtramos al namespace del dataset de demo
   const filtroNamespace = grafoUri
-    ? '' // sin filtro: la ontología puede tener cualquier namespace
+    ? '' //? sin filtro de namespace — ontologías de usuario pueden tener cualquier URI base
     : 'FILTER(STRSTARTS(STR(?sub), "http://tfg.universidad.es/recursos#"))\n        FILTER(STRSTARTS(STR(?sup), "http://tfg.universidad.es/recursos#"))';
 
   try {

@@ -16,7 +16,7 @@ router.post('/query', verificarToken, adminOConsultor, async (req, res) => {
     return res.status(400).json({ error: 'No se proporcionó ninguna consulta SPARQL' });
   }
 
-  // Validar que el grafo, si se indica, pertenece al usuario
+  //! validar que el grafo pertenece al usuario antes de ejecutar cualquier consulta
   if (grafoUri && !esGrafoDelUsuario(grafoUri, req.usuario.username)) {
     return res.status(403).json({ error: 'No tienes acceso a ese grafo' });
   }

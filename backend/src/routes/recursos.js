@@ -6,8 +6,7 @@ const fusekiService = require('../services/fusekiService');
 
 // GET /api/recursos - obtener todos los recursos del dataset
 router.get('/', verificarToken, adminOConsultor, async (req, res) => {
-  // Esta consulta devuelve los recursos con sus propiedades principales
-  // Solo coge instancias del namespace propio, no las clases de OWL/RDF internas
+  //* coge solo instancias del namespace propio — excluye clases internas de OWL/RDF
   const query = `
     PREFIX rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
@@ -41,8 +40,7 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
 router.get('/:id', verificarToken, adminOConsultor, async (req, res) => {
   const uri = decodeURIComponent(req.params.id);
 
-  // Aquí habría que validar mejor que la URI es del namespace correcto
-  // pero de momento con esto va para el TFG
+  //? habría que validar que la URI es del namespace correcto, pero de momento con que empiece por http vale
   if (!uri.startsWith('http')) {
     return res.status(400).json({ error: 'URI no válida' });
   }
@@ -81,14 +79,14 @@ router.post('/', verificarToken, soloAdmin, async (req, res) => {
     return res.status(400).json({ error: 'Los campos uri, tipo y nombre son obligatorios' });
   }
 
-  // Validación básica de la URI - no sé si esto es suficiente pero algo es algo
+  //? validación básica de URI — no sé si es suficiente pero para el TFG vale
   if (!uri.startsWith('http://tfg.universidad.es/recursos#')) {
     return res.status(400).json({ error: 'La URI debe empezar por http://tfg.universidad.es/recursos#' });
   }
 
   const fechaHoy = new Date().toISOString().split('T')[0];
 
-  // Construir la consulta INSERT - esto podría ser más elegante pero funciona
+  //? construir el INSERT a mano — podría ser más elegante con un builder, pero para el TFG funciona
   let updateQuery = `
     PREFIX rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
