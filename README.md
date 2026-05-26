@@ -75,6 +75,12 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 
 ---
 
+## Recomendaciones para el desarrollo
+
+Los comentarios del código usan la extensión [**Better Comments**](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) para VS Code. Se recomienda tenerla instalada para ver los comentarios con colores según su tipo.
+
+---
+
 ## Arrancar
 
 Solo necesitas **Docker**. Nada más que instalar.
