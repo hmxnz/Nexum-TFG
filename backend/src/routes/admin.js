@@ -1,6 +1,5 @@
-// Rutas del panel de administración: gestión de usuarios y estadísticas globales
+// Panel de administración: gestión de usuarios y estadísticas globales
 // Solo accesible para el rol admin
-// Hugo - TFG Ingeniería Informática
 
 const express  = require('express');
 const router   = express.Router();

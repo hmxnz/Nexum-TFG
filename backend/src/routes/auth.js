@@ -1,5 +1,4 @@
-// Rutas de autenticación: login, verificación de token y registro
-// Hugo - TFG Ingeniería Informática
+// Rutas de autenticación: login, registro y verificación de token
 
 const express = require('express');
 const router  = express.Router();

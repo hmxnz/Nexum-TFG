@@ -1,6 +1,5 @@
-// Rutas para la página de demostración de inferencia OWL
-// Acepta parámetro opcional grafoUri para trabajar sobre una ontología concreta
-// Hugo - TFG Ingeniería Informática
+// Inferencia OWL: jerarquías, propiedades inversas y simétricas
+// Acepta un grafoUri opcional para trabajar sobre una ontología concreta del usuario
 
 const express = require('express');
 const router  = express.Router();

@@ -1,5 +1,4 @@
-// Punto de entrada del servidor - TFG Gestión de Recursos Semánticos
-// Hugo - Ingeniería Informática
+// Punto de entrada del servidor — Nexum, gestión de recursos semánticos
 
 require('dotenv').config();
 const express = require('express');

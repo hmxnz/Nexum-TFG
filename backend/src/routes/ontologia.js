@@ -1,7 +1,5 @@
-// Ruta para cargar archivos de ontología directamente en Fuseki
-// Cada archivo se guarda en un grafo nombrado único por usuario
-// Accesible para cualquier usuario autenticado (no solo admin)
-// Hugo - TFG Ingeniería Informática
+// Subida de archivos de ontología a Fuseki
+// Cada archivo queda en su propio grafo nombrado, vinculado al usuario que lo subió
 
 const express  = require('express');
 const router   = express.Router();

@@ -1,6 +1,5 @@
-// Rutas para gestionar las ontologías propias de cada usuario
-// Cada ontología se guarda en un grafo nombrado único en Fuseki
-// Hugo - TFG Ingeniería Informática
+// Gestión de ontologías propias: listar, consultar y eliminar
+// Cada ontología vive en un grafo nombrado único dentro de Fuseki
 
 const express = require('express');
 const router  = express.Router();
