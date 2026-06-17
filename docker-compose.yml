@@ -32,7 +32,9 @@ services:
       - FUSEKI_DATASET=recursos
       - FUSEKI_USER=admin
       - FUSEKI_PASSWORD=admin123
-      - JWT_SECRET=clave_secreta_tfg_cambiar_en_produccion_2024
+      # Clave de firma de los JWT. Solo para desarrollo local;
+      # en un despliegue real iría en un .env fuera del repositorio.
+      - JWT_SECRET=nexum_clave_desarrollo_local
       - JWT_EXPIRES_IN=24h
       - NODE_ENV=development
     depends_on:
