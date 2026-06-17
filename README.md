@@ -31,12 +31,12 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 
 ## Características
 
-- 🗂️ **Ontologías propias** — sube archivos RDF/OWL/Turtle y cada uno queda en su grafo nombrado privado en Fuseki
-- 🕸️ **Grafo visual interactivo** — explora nodos y aristas con Cytoscape.js, con filtros por tipo de recurso
-- 💬 **Consola SPARQL** — escribe y ejecuta SELECT, ASK, DESCRIBE o CONSTRUCT directamente sobre el triple store
-- 🧠 **Inferencia OWL** — el razonador deduce relaciones implícitas; tú defines la ontología, él saca conclusiones
-- 🔐 **Dos roles** — administrador con acceso completo y consultor en modo solo lectura
-- 🌙 **Tema claro/oscuro** — porque hay que tener ciertas prioridades
+- 🗂️ **Ontologías propias**: sube archivos RDF/OWL/Turtle y cada uno queda en su grafo nombrado privado en Fuseki
+- 🕸️ **Grafo visual interactivo**: explora nodos y aristas con Cytoscape.js, con filtros por tipo de recurso
+- 💬 **Consola SPARQL**: escribe y ejecuta SELECT, ASK, DESCRIBE o CONSTRUCT directamente sobre el triple store
+- 🧠 **Inferencia OWL**: el razonador deduce relaciones implícitas; tú defines la ontología, él saca conclusiones
+- 🔐 **Dos roles**: administrador con acceso completo y consultor en modo solo lectura
+- 🌙 **Tema claro/oscuro**: porque hay que tener ciertas prioridades
 
 ---
 
@@ -117,6 +117,6 @@ docker-compose down -v     # parar y borrar datos de Fuseki
 
 <div align="center">
 
-Hugo Martínez Segura · Grado en Gestión de Información y Contenidos Digitales · Universidad de Murcia · 2026
+Hugo Martínez Segura - Grado en Gestión de Información y Contenidos Digitales - Universidad de Murcia - 2026
 
 </div>
