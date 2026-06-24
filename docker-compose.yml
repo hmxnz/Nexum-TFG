@@ -21,6 +21,28 @@ services:
       timeout: 10s
       retries: 5
 
+  # Servicio one-shot: carga la ontología base y materializa las
+  # inferencias OWL en cuanto Fuseki está sano. Es idempotente, así que
+  # en arranques posteriores no vuelve a cargar nada.
+  fuseki-init:
+    image: curlimages/curl:8.7.1
+    container_name: fuseki_init_tfg
+    depends_on:
+      fuseki:
+        condition: service_healthy
+    environment:
+      - FUSEKI_URL=http://fuseki:3030
+      - FUSEKI_DATASET=recursos
+      - FUSEKI_USER=${FUSEKI_USER}
+      - FUSEKI_PASSWORD=${FUSEKI_PASSWORD}
+    volumes:
+      - ./fuseki/ontologia-base.ttl:/data/ontologia-base.ttl:ro
+      - ./fuseki/load-data.sh:/load-data.sh:ro
+    entrypoint: ["sh", "/load-data.sh"]
+    restart: "no"
+    networks:
+      - tfg_network
+
   backend:
     build: ./backend
     container_name: backend_tfg
