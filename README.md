@@ -106,7 +106,7 @@ cp .env.example .env
 docker-compose up --build
 ```
 
-> [!IMPORTANTE]
+> [!IMPORTANT]
 > Antes de levantar los contenedores **copia `.env.example` a `.env`**. Docker Compose lee las variables del fichero `.env` (credenciales de Fuseki y clave JWT), que no está versionado. El `.env.example` es solo la plantilla: **no se usa directamente**, sirve para crear tu `.env`. Si lo prefieres, edita los valores del `.env` antes de arrancar.
 
 La primera vez descarga las imágenes base; paciencia. Una vez arrancado:
