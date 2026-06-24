@@ -1,7 +1,7 @@
 // Modal para subir archivos de ontología a Fuseki desde la interfaz web
 // El grafo destino se genera automáticamente en el servidor a partir del username
 // Acepta: .ttl .rdf .owl .n3 .nt con drag & drop o selector de archivo
-// Hugo - TFG Ingeniería Informática
+// Hugo - TFG Grado en Gestión de Información y Contenidos Digitales
 
 import React, { useState, useRef } from 'react'
 import { api } from '../services/api'

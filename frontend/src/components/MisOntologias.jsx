@@ -1,6 +1,6 @@
 // Página principal de gestión de ontologías del usuario
 // Lista las ontologías propias, permite cargar nuevas y eliminarlas
-// Hugo - TFG Ingeniería Informática
+// Hugo - TFG Grado en Gestión de Información y Contenidos Digitales
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'

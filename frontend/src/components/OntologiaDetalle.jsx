@@ -1,7 +1,7 @@
 // Página de detalle de una ontología concreta del usuario
 // Tabs: Recursos · Grafo · SPARQL · Inferencia
 // Todas las consultas se acotan al grafo nombrado de la ontología
-// Hugo - TFG Ingeniería Informática
+// Hugo - TFG Grado en Gestión de Información y Contenidos Digitales
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
