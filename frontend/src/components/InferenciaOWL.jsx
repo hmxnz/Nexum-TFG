@@ -335,16 +335,18 @@ export default function InferenciaOWL() {
         <p className="inf-desc">
           En la ontología, <code>recursos:esCitadoPor</code> está declarada como
           la inversa de <code>recursos:cita</code> usando <code>owl:inverseOf</code>.
-          Sin un razonador OWL activo, solo existen los triples <em>cita</em> que se
-          insertaron explícitamente. Los triples <em>esCitadoPor</em> deberían inferirse
-          automáticamente, pero Fuseki TDB2 sin razonador no lo hace.
+          Fuseki TDB2 corre <strong>sin razonador</strong>, así que los triples
+          <em> esCitadoPor</em> no están materializados en el dataset. Un razonador OWL
+          los materializaría; aquí, en cambio, se <strong>calculan en tiempo de consulta</strong>
+          con el camino inverso de SPARQL 1.1 (<code>^recursos:cita</code>), obteniendo
+          exactamente la misma semántica sin almacenar nada extra.
         </p>
 
         <div className="inf-comparativa">
           <div className="inf-comp-bloque inf-comp-ok">
             <div className="inf-comp-header">
               <span className="inf-comp-icon">✓</span>
-              <h3>Con triples explícitos: <code>cita</code></h3>
+              <h3>Tripleta explícita declarada: <code>cita</code></h3>
             </div>
             <p className="inf-comp-desc">
               Estos triples están en el dataset porque fueron cargados directamente.
@@ -357,20 +359,21 @@ export default function InferenciaOWL() {
             />
           </div>
 
-          <div className="inf-comp-bloque inf-comp-ko">
+          <div className="inf-comp-bloque inf-comp-ok">
             <div className="inf-comp-header">
-              <span className="inf-comp-icon">✗</span>
-              <h3>Sin razonador: <code>esCitadoPor</code></h3>
+              <span className="inf-comp-icon">✓</span>
+              <h3>Tripleta derivada con SPARQL: <code>esCitadoPor</code></h3>
             </div>
             <p className="inf-comp-desc">
-              Esta consulta devuelve vacío porque Fuseki TDB2 no infiere automáticamente
-              la propiedad inversa sin un razonador OWL activo.
+              Inferido con SPARQL (camino inverso <code>^recursos:cita</code>): cada
+              relación <em>esCitadoPor</em> se obtiene al vuelo recorriendo la
+              <em> cita</em> explícita en sentido contrario, sin materializarla.
             </p>
             <TablaRelaciones
               relaciones={datos?.propInversa?.conEsCitadoPor}
               encabezadoOrigen="Origen"
               encabezadoDestino="Destino (esCitadoPor)"
-              vacio="Sin razonador OWL → resultado vacío (como se espera)"
+              vacio="No hay relaciones cita de las que derivar esCitadoPor."
             />
           </div>
         </div>
@@ -385,16 +388,17 @@ export default function InferenciaOWL() {
         <p className="inf-desc">
           La propiedad <code>recursos:estaRelacionadoCon</code> está declarada como
           <code> owl:SymmetricProperty</code>: si A está relacionado con B, entonces B
-          está relacionado con A. Sin un razonador OWL, solo funcionan los triples
-          declarados explícitamente. La consulta que busca ambas direcciones a la vez
-          devuelve vacío si los inversos no están cargados en el dataset.
+          está relacionado con A. Fuseki TDB2 corre <strong>sin razonador</strong>, así que
+          la dirección opuesta no está materializada. Un razonador OWL la materializaría;
+          aquí se <strong>calcula en tiempo de consulta</strong> recorriendo cada triple
+          explícito en sentido inverso con SPARQL, obteniendo la misma semántica simétrica.
         </p>
 
         <div className="inf-comparativa">
           <div className="inf-comp-bloque inf-comp-ok">
             <div className="inf-comp-header">
               <span className="inf-comp-icon">✓</span>
-              <h3>Dirección declarada explícitamente</h3>
+              <h3>Tripleta explícita declarada (dirección directa)</h3>
             </div>
             <p className="inf-comp-desc">
               Triples <code>estaRelacionadoCon</code> tal como están en el dataset.
@@ -406,19 +410,20 @@ export default function InferenciaOWL() {
             />
           </div>
 
-          <div className="inf-comp-bloque inf-comp-ko">
+          <div className="inf-comp-bloque inf-comp-ok">
             <div className="inf-comp-header">
-              <span className="inf-comp-icon">✗</span>
-              <h3>Ambas direcciones simultáneamente (sin razonador)</h3>
+              <span className="inf-comp-icon">✓</span>
+              <h3>Tripleta derivada con SPARQL (dirección inversa)</h3>
             </div>
             <p className="inf-comp-desc">
-              Esta consulta exige que existan triples en las dos direcciones.
-              Con un razonador OWL los resultados serían idénticos al bloque anterior.
+              Inferido con SPARQL: por cada triple explícito se deriva al vuelo la
+              dirección opuesta de <code>estaRelacionadoCon</code>, sin materializarla.
+              Con un razonador OWL estos triples estarían almacenados; aquí se calculan.
             </p>
             <TablaRelSimetrica
               relaciones={datos?.propSimetrica?.inversa}
               etiqueta="↔ estaRelacionadoCon"
-              vacio="Sin razonador OWL → resultado vacío (como se espera)"
+              vacio="No hay relaciones estaRelacionadoCon de las que derivar la inversa."
             />
           </div>
         </div>

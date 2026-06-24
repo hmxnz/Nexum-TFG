@@ -63,13 +63,18 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
       }
     `;
 
+    // esCitadoPor NO está materializada en el dataset (Fuseki TDB2 sin razonador).
+    // Se DERIVA en tiempo de consulta con el camino inverso ^recursos:cita:
+    // "?origen ^cita ?destino" equivale a "?destino cita ?origen", es decir,
+    // ?origen es citado por ?destino. Misma semántica que owl:inverseOf, pero
+    // calculada al vuelo en lugar de materializada por un razonador.
     const queryEsCitadoPor = `
       PREFIX recursos: <http://tfg.universidad.es/recursos#>
       PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
 
       SELECT ?origen ?nombreOrigen ?destino ?nombreDestino
       WHERE {
-        ?origen recursos:esCitadoPor ?destino .
+        ?origen ^recursos:cita ?destino .
         OPTIONAL { ?origen rdfs:label ?nombreOrigen }
         OPTIONAL { ?destino rdfs:label ?nombreDestino }
       }
@@ -87,6 +92,11 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
       }
     `;
 
+    // estaRelacionadoCon es owl:SymmetricProperty: si A está relacionado con B,
+    // entonces B lo está con A. La dirección opuesta NO está materializada; se
+    // DERIVA al vuelo recorriendo cada triple explícito en sentido inverso.
+    // Para el triple "?b estaRelacionadoCon ?a" emitimos el par (?a, ?b), que es
+    // la dirección simétrica derivada. Calculado, no materializado.
     const querySimetricaInversa = `
       PREFIX recursos: <http://tfg.universidad.es/recursos#>
       PREFIX rdfs:     <http://www.w3.org/2000/01/rdf-schema#>
@@ -94,7 +104,6 @@ router.get('/', verificarToken, adminOConsultor, async (req, res) => {
       SELECT ?a ?nombreA ?b ?nombreB
       WHERE {
         ?b recursos:estaRelacionadoCon ?a .
-        ?a recursos:estaRelacionadoCon ?b .
         OPTIONAL { ?a rdfs:label ?nombreA }
         OPTIONAL { ?b rdfs:label ?nombreB }
       }

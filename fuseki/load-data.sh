@@ -7,11 +7,14 @@
 #   2) el grafo nombrado del admin -> aparece en "mis ontologías"
 #      (coincide con la entrada de backend/src/data/ontologias.json)
 #
-# NOTA: no se materializa ninguna inferencia. La app demuestra a
-# propósito que Fuseki TDB2 sin razonador NO infiere las propiedades
-# inversas ni simétricas (deben salir vacías), mientras que la
-# herencia de tipos sí se obtiene con property paths SPARQL
-# (rdfs:subClassOf+). Materializar rompería ese discurso didáctico.
+# NOTA: no se materializa ninguna inferencia. Fuseki TDB2 corre sin
+# razonador, así que las tripletas inferidas (herencia de tipos,
+# propiedad inversa esCitadoPor y dirección simétrica de
+# estaRelacionadoCon) NO se almacenan: se CALCULAN en tiempo de
+# consulta con SPARQL 1.1 (rdfs:subClassOf+, el camino inverso ^cita y
+# el recorrido de cada triple en sentido opuesto). Un razonador OWL las
+# materializaría; aquí se demuestra el cálculo al vuelo. Materializar
+# rompería ese discurso didáctico.
 #
 # Se ejecuta como servicio one-shot al levantar el proyecto. Es
 # idempotente: si el dataset ya tiene datos, no hace nada. Así un
