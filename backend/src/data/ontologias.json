@@ -6,7 +6,7 @@
       "nombre": "ontologia-base.ttl",
       "grafoUri": "http://tfg.universidad.es/usuario/admin/ontologia/ontologia-base",
       "formato": "text/turtle",
-      "triples": 154,
+      "triples": 135,
       "fecha": "2026-05-13T18:43:45.408Z"
     }
   ]
