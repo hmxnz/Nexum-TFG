@@ -9,7 +9,7 @@ services:
     ports:
       - "3030:3030"
     environment:
-      - ADMIN_PASSWORD=admin123
+      - ADMIN_PASSWORD=${FUSEKI_PASSWORD}
       - JAVA_OPTIONS=-Xmx2g -Xms512m
     volumes:
       - fuseki_data:/fuseki/databases
@@ -30,11 +30,11 @@ services:
       - PORT=4000
       - FUSEKI_URL=http://fuseki:3030
       - FUSEKI_DATASET=recursos
-      - FUSEKI_USER=admin
-      - FUSEKI_PASSWORD=admin123
-      # Clave de firma de los JWT. Solo para desarrollo local;
-      # en un despliegue real iría en un .env fuera del repositorio.
-      - JWT_SECRET=nexum_clave_desarrollo_local
+      - FUSEKI_USER=${FUSEKI_USER}
+      - FUSEKI_PASSWORD=${FUSEKI_PASSWORD}
+      # Las credenciales y la clave JWT se leen del fichero .env (no versionado).
+      # Copia .env.example a .env y rellena los valores. Ver anexo de despliegue.
+      - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=24h
       - NODE_ENV=development
     depends_on:

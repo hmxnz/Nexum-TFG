@@ -1,6 +1,13 @@
 // Punto de entrada del servidor — Nexum, gestión de recursos semánticos
 
 require('dotenv').config();
+
+//! sin JWT_SECRET no se pueden firmar ni verificar tokens — mejor abortar al arrancar que reventar en la primera petición
+if (!process.env.JWT_SECRET) {
+  console.error('ERROR: falta la variable de entorno JWT_SECRET. Defínela en el fichero .env antes de arrancar.');
+  process.exit(1);
+}
+
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');

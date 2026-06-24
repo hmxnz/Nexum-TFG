@@ -40,6 +40,20 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 
 ---
 
+## Ontología de ejemplo
+
+No hace falta empezar de cero. Fuseki arranca con una **ontología de ejemplo** ya cargada (`fuseki/ontologia-base.ttl`), así que nada más levantar el proyecto tienes datos con los que explorar el grafo, lanzar consultas SPARQL y comprobar la inferencia OWL.
+
+Modela recursos académicos y científicos con una jerarquía de clases (`Recurso` → `RecursoDigital` → `Documento`, y de ahí `Artículo`, `Tesis Doctoral`, `TFG`, además de `Software` y `Dataset`), autores, áreas temáticas y propiedades como `tieneAutor`, `perteneceA` o `cita`. Incluye casos pensados para ver al razonador en acción: una propiedad inversa (`cita` / `esCitadoPor`), una simétrica (`estaRelacionadoCon`) y la herencia de tipos por la jerarquía de subclases.
+
+A continuación, la estructura de la ontología visualizada con [WebVOWL](https://service.tib.eu/webvowl/):
+
+<div align="center">
+  <img src="assets/Captura%20WebO.png" alt="Ontología de ejemplo visualizada en WebVOWL"/>
+</div>
+
+---
+
 ## Vistas
 
 <table>
