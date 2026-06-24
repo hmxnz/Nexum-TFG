@@ -46,7 +46,7 @@ No hace falta empezar de cero. Fuseki arranca con una **ontología de ejemplo** 
 
 Modela recursos académicos y científicos con una jerarquía de clases (`Recurso` → `RecursoDigital` → `Documento`, y de ahí `Artículo`, `Tesis Doctoral`, `TFG`, además de `Software` y `Dataset`), autores, áreas temáticas y propiedades como `tieneAutor`, `perteneceA` o `cita`. Incluye casos pensados para ver al razonador en acción: una propiedad inversa (`cita` / `esCitadoPor`), una simétrica (`estaRelacionadoCon`) y la herencia de tipos por la jerarquía de subclases.
 
-A continuación, la estructura de la ontología visualizada con [WebVOWL](https://service.tib.eu/webvowl/):
+A continuación la estructura de la ontología visualizada con [WebVOWL](https://service.tib.eu/webvowl/):
 
 <div align="center">
   <img src="assets/Captura%20WebO.png" alt="Ontología de ejemplo visualizada en WebVOWL"/>
