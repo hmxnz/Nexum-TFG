@@ -101,7 +101,7 @@ Solo necesitas **Docker**. Nada más que instalar.
 
 ```bash
 git clone https://github.com/hmxnz/Nexum
-cd nexum
+cd Nexum-TFG
 cp .env.example .env
 docker-compose up --build
 ```
