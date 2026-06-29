@@ -1,15 +1,14 @@
-// Página de demostración de inferencia OWL
 // Muestra jerarquía de clases, demo interactiva de tipos inferidos,
 // propiedades inversas y propiedades simétricas
 
 import React, { useEffect, useState, useCallback } from 'react'
 import { api } from '../services/api'
 
-// ----- Árbol de jerarquía -----
+//! ----- Árbol de jerarquía -----
 
-// Construye un mapa de padre → hijos a partir del array de relaciones subClassOf
+// Construye un mapa de padre hijos a partir del array de relaciones subClassOf
 function construirArbol(jerarquia) {
-  const hijos = {}     // padre → [hijos]
+  const hijos = {}     // de padre a [hijos]
   const tieneParent = new Set()
 
   for (const { sub, sup } of jerarquia) {
@@ -72,7 +71,7 @@ function ArbolJerarquia({ jerarquia }) {
   )
 }
 
-// ----- Demo interactiva de tipos -----
+//! ----- Demo interactiva de tipos -----
 
 function DemoTipos({ recursos }) {
   const [uriSeleccionada, setUriSeleccionada] = useState('')
