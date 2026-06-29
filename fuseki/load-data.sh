@@ -1,25 +1,5 @@
 #!/bin/sh
-# ------------------------------------------------------------------
-# Carga inicial de la ontología base en Fuseki.
-#
-# La ontología se carga en dos sitios:
-#   1) el grafo por defecto        -> alimenta la vista "general"
-#   2) el grafo nombrado del admin -> aparece en "mis ontologías"
-#      (coincide con la entrada de backend/src/data/ontologias.json)
-#
-# NOTA: no se materializa ninguna inferencia. Fuseki TDB2 corre sin
-# razonador, así que las tripletas inferidas (herencia de tipos,
-# propiedad inversa esCitadoPor y dirección simétrica de
-# estaRelacionadoCon) NO se almacenan: se CALCULAN en tiempo de
-# consulta con SPARQL 1.1 (rdfs:subClassOf+, el camino inverso ^cita y
-# el recorrido de cada triple en sentido opuesto). Un razonador OWL las
-# materializaría; aquí se demuestra el cálculo al vuelo. Materializar
-# rompería ese discurso didáctico.
-#
-# Se ejecuta como servicio one-shot al levantar el proyecto. Es
-# idempotente: si el dataset ya tiene datos, no hace nada. Así un
-# `git clone && docker compose up` deja la app lista para usar.
-# ------------------------------------------------------------------
+# Carga inicial de la ontología base en Fuseki. Si no se usa la ontología base, se puede borrar
 set -eu
 
 FUSEKI="${FUSEKI_URL:-http://fuseki:3030}"
