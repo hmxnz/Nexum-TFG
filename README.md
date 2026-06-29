@@ -4,7 +4,7 @@
 
 <br/>
 
-**Carga una ontología, explora el grafo y deja que el razonador haga su magia.**
+**Carga una ontología, explora el grafo y deja que Nexum haga su magia.**
 
 [![React](https://img.shields.io/badge/React_18-61DAFB?logo=react&logoColor=white&style=flat-square)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white&style=flat-square)](https://vitejs.dev)
