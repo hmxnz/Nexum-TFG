@@ -55,9 +55,9 @@ services:
       - FUSEKI_USER=${FUSEKI_USER}
       - FUSEKI_PASSWORD=${FUSEKI_PASSWORD}
       # Las credenciales y la clave JWT se leen del fichero .env (no versionado).
-      # Copia .env.example a .env y rellena los valores. Ver anexo de despliegue.
+      # Copia .env.example a .env y rellena los valores. Ver anexo de despliegue en el repo.
       - JWT_SECRET=${JWT_SECRET}
-      # Caducidad del token JWT, configurable desde .env (por defecto 24h)
+      # Caducidad del token JWT, configurable desde .env que por defecto son 24h
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
       - NODE_ENV=development
     depends_on:
