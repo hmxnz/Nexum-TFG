@@ -8,7 +8,7 @@ const fusekiService = require('../services/fusekiService');
 const { esGrafoDelUsuario } = require('./mis-ontologias');
 
 // GET /api/inferencia
-// Query param opcional: grafoUri
+// Query parametro opcional: grafoUri
 router.get('/', verificarToken, adminOConsultor, async (req, res) => {
   const { grafoUri } = req.query;
 
