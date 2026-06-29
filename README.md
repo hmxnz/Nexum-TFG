@@ -23,7 +23,7 @@
 
 ## ¿Qué es Nexum?
 
-Nexum es una aplicación web para gestionar y explorar **ontologías RDF/OWL** sobre Apache Jena Fuseki. Subes tus archivos `.ttl` o `.owl`, navegas por el grafo de conocimiento de forma interactiva, lanzas consultas SPARQL y ves en tiempo real qué relaciones infiere el razonador OWL — incluso las que no declaraste explícitamente.
+Nexum es una aplicación web para gestionar y explorar **ontologías RDF/OWL** sobre Apache Jena Fuseki. Subes tus archivos `.ttl` o `.owl`, navegas por el grafo de conocimiento de forma interactiva, lanzas consultas SPARQL y ves en tiempo real qué relaciones infiere.
 
 Nació como TFG en la Universidad de Murcia, pero está pensado para que cualquiera pueda clonarlo, cargarlo con sus datos y ponerse a explorar sin tocar una sola línea de configuración.
 
