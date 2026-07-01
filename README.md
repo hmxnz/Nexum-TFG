@@ -34,7 +34,7 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 - 🗂️ **Ontologías propias**: sube archivos RDF/OWL/Turtle y cada uno queda en su grafo nombrado privado en Fuseki
 - 🕸️ **Grafo visual interactivo**: explora nodos y aristas con Cytoscape.js, con filtros por tipo de recurso
 - 💬 **Consola SPARQL**: escribe y ejecuta SELECT, ASK, DESCRIBE o CONSTRUCT directamente sobre el triple store
-- 🧠 **Inferencia OWL**: el razonador deduce relaciones implícitas; tú defines la ontología, él saca conclusiones
+- 🧠 **Inferencia OWL**: se deducen relaciones implícitas; tú defines la ontología, Nexum saca conclusiones
 - 🔐 **Dos roles**: administrador con acceso completo y consultor en modo solo lectura
 - 🌙 **Tema claro/oscuro**: porque hay que tener ciertas prioridades
 
@@ -44,7 +44,7 @@ Nació como TFG en la Universidad de Murcia, pero está pensado para que cualqui
 
 No hace falta empezar de cero. Fuseki arranca con una **ontología de ejemplo** ya cargada (`fuseki/ontologia-base.ttl`), así que nada más levantar el proyecto tienes datos con los que explorar el grafo, lanzar consultas SPARQL y comprobar la inferencia OWL.
 
-Modela recursos académicos y científicos con una jerarquía de clases (`Recurso` → `RecursoDigital` → `Documento`, y de ahí `Artículo`, `Tesis Doctoral`, `TFG`, además de `Software` y `Dataset`), autores, áreas temáticas y propiedades como `tieneAutor`, `perteneceA` o `cita`. Incluye casos pensados para ver al razonador en acción: una propiedad inversa (`cita` / `esCitadoPor`), una simétrica (`estaRelacionadoCon`) y la herencia de tipos por la jerarquía de subclases.
+Modela recursos académicos y científicos con una jerarquía de clases (`Recurso` → `RecursoDigital` → `Documento`, y de ahí `Artículo`, `Tesis Doctoral`, `TFG`, además de `Software` y `Dataset`), autores, áreas temáticas y propiedades como `tieneAutor`, `perteneceA` o `cita`. Incluye casos pensados para ver la aplicación en acción: una propiedad inversa (`cita` / `esCitadoPor`), una simétrica (`estaRelacionadoCon`) y la herencia de tipos por la jerarquía de subclases.
 
 A continuación la estructura de la ontología visualizada con [WebVOWL](https://service.tib.eu/webvowl/):
 
@@ -83,7 +83,7 @@ A continuación la estructura de la ontología visualizada con [WebVOWL](https:/
 |------|-----------|
 | Frontend | React 18 + Vite |
 | Backend | Node.js + Express |
-| Triple store | Apache Jena Fuseki 4.x (razonador OWL) |
+| Triple store | Apache Jena Fuseki 4.x|
 | Autenticación | JWT + bcrypt |
 | Contenedores | Docker + Docker Compose |
 
