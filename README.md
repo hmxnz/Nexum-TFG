@@ -100,7 +100,7 @@ Los comentarios del código usan la extensión [**Better Comments**](https://mar
 Solo necesitas **Docker**. Nada más que instalar.
 
 ```bash
-git clone https://github.com/hmxnz/Nexum
+git clone https://github.com/hmxnz/Nexum-TFG
 cd Nexum-TFG
 cp .env.example .env
 docker-compose up --build
